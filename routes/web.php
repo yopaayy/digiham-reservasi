@@ -32,6 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/services', [ServiceController::class, 'index'])->name('admin.services.index');
     Route::get('/admin/services/create', [ServiceController::class, 'create'])->name('admin.services.create');
     Route::post('/admin/services', [ServiceController::class, 'store'])->name('admin.services.store');
+    Route::delete('/admin/services/{service}', [ServiceController::class, 'destroy'])->name('admin.services.destroy');
+    Route::get('/admin/services/{service}/edit', [ServiceController::class, 'edit'])->name('admin.services.edit');
+    Route::put('/admin/services/{service}', [ServiceController::class, 'update'])->name('admin.services.update');
 });
 
 require __DIR__ . '/auth.php';

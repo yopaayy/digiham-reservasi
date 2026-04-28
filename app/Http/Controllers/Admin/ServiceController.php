@@ -41,4 +41,34 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('message', 'Layanan berhasil di tambahkan!');
 
     }
+
+    public function destroy(Service $service)
+    {
+        $service->delete();
+
+        return redirect()->route('admin.services.index')->with('message', 'Layanan berhasil ditambahkan bro!');
+    }
+
+    public function edit(Service $service)
+    {
+        return Inertia::render('Admin/Services/Edit', [
+            'service' => $service
+        ]);
+    }
+
+    public function update(Request $request, Service $service)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'duration' => 'required|integer|min:1',
+        ]);
+
+        $validated['slug'] = Str::slug($request->name);
+
+        $service->update($validated);
+
+        return redirect()->route('admin.services.index')->with('message', 'Layananan telah berhasil di edit bro!');
+    }
 }
